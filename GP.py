@@ -12,12 +12,12 @@ class Function(Genetic_Node):
         return 0
 
 class unary_function(Function):
-    def __init__(self):
-        self.IsOperator = "unary_function"
-        self.node_sons = {
-            'left': None,
-            'right':None
-        }
+    IsOperator = "unary_function"
+    # def __init__(self):
+    #     self.node_sons = {
+    #         'left': None,
+    #         'right':None
+    #     }
     def calculate(self, x):
         return 0
     def get_self(self, nodes):
@@ -30,12 +30,12 @@ class unary_function(Function):
     #     self.ref_in_parent = new_child
 
 class binary_function(Function):
-    def __init__(self):
-        self.IsOperator = "binary_function"
-        self.node_sons = {
-            'left': None,
-            'right':None
-        }
+    IsOperator = "binary_function"
+    # def __init__(self):
+    #     self.node_sons = {
+    #         'left': None,
+    #         'right':None
+    #     }
     def calculate(self, x):
         return 0
     def get_self(self, nodes):
@@ -48,30 +48,72 @@ class binary_function(Function):
         self.node_sons['right'].define_parent([self,'right'])
 
 class GP_sin(unary_function):
+    kind_function = "sin"
+    def __init__(self):
+        self.node_sons = {
+            'left': None,
+            'right':None
+        }
     def calculate(self, x):
         return np.sin(self.node_sons['left'].calculate(x))
     
 class GP_abs(unary_function):
+    kind_function = "abs"
+    def __init__(self):
+        self.node_sons = {
+            'left': None,
+            'right':None
+        }
     def calculate(self, x):
-        return np.abs(self.left_node.calculate(x))
+        return np.abs(self.node_sons['left'].calculate(x))
     
 class GP_exp(unary_function):
+    kind_function = "exp"
+    def __init__(self):
+        self.node_sons = {
+            'left': None,
+            'right':None
+        }
     def calculate(self, x):
-        return np.exp(self.left_node.calculate(x))
+        return np.exp(self.node_sons['left'].calculate(x))
 
 class GP_sum(binary_function):
+    kind_function = "sum"
+    def __init__(self):
+        self.node_sons = {
+            'left': None,
+            'right':None
+        }
     def calculate(self, x):
         return self.node_sons['left'].calculate(x) + self.node_sons['right'].calculate(x)
 
 class GP_differense(binary_function):
+    kind_function = "differense"
+    def __init__(self):
+        self.node_sons = {
+            'left': None,
+            'right':None
+        }
     def calculate(self, x):
         return self.node_sons['left'].calculate(x) - self.node_sons['right'].calculate(x)
     
 class GP_product(binary_function):
+    kind_function = "product"
+    def __init__(self):
+        self.node_sons = {
+            'left': None,
+            'right':None
+        }
     def calculate(self, x):
         return self.node_sons['left'].calculate(x) * self.node_sons['right'].calculate(x)
 
 class GP_division(binary_function):
+    kind_function = "differense"
+    def __init__(self):
+        self.node_sons = {
+            'left': None,
+            'right':None
+        }
     def calculate(self, x):
         return self.node_sons['left'].calculate(x) / self.node_sons['right'].calculate(x)
 
@@ -86,9 +128,6 @@ class Terminal(Genetic_Node):
     
 class Variable(Terminal):
     var_index = None
-    # def __init__(self, index):
-    #     self.var_index = index
-    #     self.IsTerminal = f'variable_{index}'
     def __init__(self):
         self.IsTerminal = 'variable'
     def calculate(self, x):
@@ -96,33 +135,9 @@ class Variable(Terminal):
     
 class Value(Terminal):
     value = [None, None]  # первое - значение константы, второе - размерность задачи
-    # def __init__(self, value):
-    #     self.value = value
-    #     self.IsTerminal = 'vaule'
     def __init__(self):
         self.IsTerminal = 'value'
     def calculate(self, x):
         return self.value[0] * np.ones(self.value[1])
 
 
-
-
-# class Individ:
-#     def __init__(self, n, q, f, cr, uplimit, lowlimit, g, fofma):
-#         self.n = n                      # количество измерений в целевой функции
-#         self.Q = q
-#         self.F = f
-#         self.Cr = cr
-#         self.uplimit = uplimit
-#         self.lowlimit = lowlimit
-#         self.Sigma = 0.000001           #  точность
-#         self.fofma = fofma              #  целевая функция
-#         self.result = {"Point": None,
-#                        "Minimum": None,
-#                        "Time_to_minimum": None,
-#                        "Minimum_of_Demand": None,
-#                        "Time_of_Demand": None,
-#                        "Point_of_Demand": None
-#                        }
-#         self.progressOfFitness = list() # построение графика
-#         self.CountOfGeneration = g      # количество вычислений целевой функции
