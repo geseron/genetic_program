@@ -13,11 +13,6 @@ class Function(Genetic_Node):
 
 class unary_function(Function):
     IsOperator = "unary_function"
-    # def __init__(self):
-    #     self.node_sons = {
-    #         'left': None,
-    #         'right':None
-    #     }
     def calculate(self, x):
         return 0
     def get_self(self, nodes):
@@ -31,11 +26,6 @@ class unary_function(Function):
 
 class binary_function(Function):
     IsOperator = "binary_function"
-    # def __init__(self):
-    #     self.node_sons = {
-    #         'left': None,
-    #         'right':None
-    #     }
     def calculate(self, x):
         return 0
     def get_self(self, nodes):
@@ -108,7 +98,7 @@ class GP_product(binary_function):
         return self.node_sons['left'].calculate(x) * self.node_sons['right'].calculate(x)
 
 class GP_division(binary_function):
-    kind_function = "differense"
+    kind_function = "division"
     def __init__(self):
         self.node_sons = {
             'left': None,
