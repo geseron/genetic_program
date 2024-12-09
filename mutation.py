@@ -123,7 +123,6 @@ for i in nodes:
 
 
 def mutation(nodes, mutant_index, function_list, u_functions, bi_functions, terminals):
-    # mutant_index = np.random.randint(1,nodes_count)
     mutant = nodes[mutant_index]
     if mutant.IsOperator == "unary_function":
         variants = u_functions.copy()
