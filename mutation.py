@@ -122,8 +122,8 @@ for i in nodes:
         print(f'ObJ: {i}        parent:  {i.parent}')
 
 
-def mutation(nodes, nodes_count, function_list, u_functions, bi_functions, terminals):
-    mutant_index = np.random.randint(1,nodes_count)
+def mutation(nodes, mutant_index, function_list, u_functions, bi_functions, terminals):
+    # mutant_index = np.random.randint(1,nodes_count)
     mutant = nodes[mutant_index]
     if mutant.IsOperator == "unary_function":
         variants = u_functions.copy()
@@ -136,7 +136,7 @@ def mutation(nodes, nodes_count, function_list, u_functions, bi_functions, termi
         new_node.node_sons = mutant.node_sons.copy()
         new_node.node_sons['left'].parent = [new_node,'left']
 
-        nodes[mutant_index] = new_node
+        nodes[mutant_index] = new_node              
     elif mutant.IsOperator == "binary_function":
         variants = bi_functions.copy()
         variants.remove( function_list[mutant.kind_function] )
@@ -152,7 +152,7 @@ def mutation(nodes, nodes_count, function_list, u_functions, bi_functions, termi
         nodes[mutant_index] = new_node
     elif not(mutant.IsTerminal == None):
         variants = terminals.copy()
-        
+
         new_node = np.random.choice(variants)()
 
         if new_node.IsTerminal == 'value':
