@@ -142,11 +142,15 @@ class Terminal(Genetic_Node):
 
     
 class Variable(Terminal):
-    var_index = None
-    def __init__(self):
+    var_index = None # индекс переменной
+    def __init__(self,dimensions):
         self.IsTerminal = 'variable'
+        self.dimension_count = dimensions
     def calculate(self, x):
-        return x[:,self.var_index]
+        if self.dimension_count != 1:
+            return x[:,self.var_index]
+        else:
+            return x
     def visualize(self, graph, parent_id=None):
         node_id = f'{str(id(self))}'
         graph.node(node_id, f"x_{self.var_index}")
@@ -154,14 +158,15 @@ class Variable(Terminal):
             graph.edge(parent_id, node_id)
     
 class Value(Terminal):
-    value = [None, None]  # первое - значение константы, второе - размерность задачи
-    def __init__(self):
+    value = None  # значение константы
+    def __init__(self,dimensions):
         self.IsTerminal = 'value'
+        self.dimension_count = dimensions
     def calculate(self, x):
-        return self.value[0] * np.ones(self.value[1])
+        return self.value * np.ones(self.dimension_count)
     def visualize(self, graph, parent_id=None):
         node_id = f'{str(id(self))}'
-        graph.node(node_id, f"{self.value[0]:.2f}")
+        graph.node(node_id, f"{self.value:.2f}")
         if parent_id:
             graph.edge(parent_id, node_id)
 

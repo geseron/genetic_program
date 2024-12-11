@@ -33,6 +33,7 @@ class gp_individ():
 
         self.head = self.functions[np.random.randint(self.function_count)]()
         self.nodes.append(self.head)
+        self.head.dimension_count = self.dimension_count
 
         self.nodes_count = self.fill_functions()
         self.nodes_count = self.fill_terminals()
@@ -66,36 +67,36 @@ class gp_individ():
         temp_nodes = []
         for i in reversed(range(1,self.nodes_count)):
             if self.nodes[i].IsOperator == "unary_function" and self.nodes[i].node_sons['left'] is None:
-                self.nodes[i].node_sons['left'] = self.terminals[np.random.randint(self.terminal_count)]()
+                self.nodes[i].node_sons['left'] = self.terminals[np.random.randint(self.terminal_count)](self.dimension_count)
 
                 if self.nodes[i].node_sons['left'].IsTerminal == 'variable': self.nodes[i].node_sons['left'].var_index = np.random.randint(self.dimension_count)
-                else: self.nodes[i].node_sons['left'].value = [np.random.uniform(self.vaule_borders[0],self.vaule_borders[1]), self.dimension_count]
+                else: self.nodes[i].node_sons['left'].value = np.random.uniform(self.vaule_borders[0],self.vaule_borders[1])
 
                 temp_nodes.append(self.nodes[i].node_sons['left'])
             elif self.nodes[i].IsOperator == "binary_function":
                 if (self.nodes[i].node_sons['left'] is None) and (self.nodes[i].node_sons['right'] is None): 
-                    self.nodes[i].node_sons['left'] = self.terminals[np.random.randint(self.terminal_count)]()
-                    self.nodes[i].node_sons['right'] = self.terminals[np.random.randint(self.terminal_count)]()
+                    self.nodes[i].node_sons['left'] = self.terminals[np.random.randint(self.terminal_count)](self.dimension_count)
+                    self.nodes[i].node_sons['right'] = self.terminals[np.random.randint(self.terminal_count)](self.dimension_count)
 
                     if self.nodes[i].node_sons['left'].IsTerminal == 'variable': self.nodes[i].node_sons['left'].var_index = np.random.randint(self.dimension_count)
-                    else: self.nodes[i].node_sons['left'].value = [np.random.uniform(self.vaule_borders[0],self.vaule_borders[1]), self.dimension_count]
+                    else: self.nodes[i].node_sons['left'].value = np.random.uniform(self.vaule_borders[0],self.vaule_borders[1])
                     if self.nodes[i].node_sons['right'].IsTerminal == 'variable': self.nodes[i].node_sons['right'].var_index = np.random.randint(self.dimension_count)
-                    else: self.nodes[i].node_sons['right'].value = [np.random.uniform(self.vaule_borders[0],self.vaule_borders[1]), self.dimension_count]
+                    else: self.nodes[i].node_sons['right'].value = np.random.uniform(self.vaule_borders[0],self.vaule_borders[1])
 
                     temp_nodes.append(self.nodes[i].node_sons['left'])
                     temp_nodes.append(self.nodes[i].node_sons['right'])
                 elif (self.nodes[i].node_sons['left'] is None):
-                    self.nodes[i].node_sons['left'] = self.terminals[np.random.randint(self.terminal_count)]()
+                    self.nodes[i].node_sons['left'] = self.terminals[np.random.randint(self.terminal_count)](self.dimension_count)
 
                     if self.nodes[i].node_sons['left'].IsTerminal == 'variable': self.nodes[i].node_sons['left'].var_index = np.random.randint(self.dimension_count)
-                    else: self.nodes[i].node_sons['left'].value = [np.random.uniform(self.vaule_borders[0],self.vaule_borders[1]), self.dimension_count]
+                    else: self.nodes[i].node_sons['left'].value = np.random.uniform(self.vaule_borders[0],self.vaule_borders[1])
 
                     temp_nodes.append(self.nodes[i].node_sons['left'])
                 elif (self.nodes[i].node_sons['right'] is None):
-                    self.nodes[i].node_sons['right'] = self.terminals[np.random.randint(self.terminal_count)]()
+                    self.nodes[i].node_sons['right'] = self.terminals[np.random.randint(self.terminal_count)](self.dimension_count)
 
                     if self.nodes[i].node_sons['right'].IsTerminal == 'variable': self.nodes[i].node_sons['right'].var_index = np.random.randint(self.dimension_count)
-                    else: self.nodes[i].node_sons['right'].value = [np.random.uniform(self.vaule_borders[0],self.vaule_borders[1]), self.dimension_count]
+                    else: self.nodes[i].node_sons['right'].value = np.random.uniform(self.vaule_borders[0],self.vaule_borders[1])
                     
                     temp_nodes.append(self.nodes[i].node_sons['right'])
         for temp in temp_nodes:
@@ -137,10 +138,10 @@ class gp_individ():
             elif not(mutant.IsTerminal == None):
                 variants = self.terminals.copy()
 
-                new_node = np.random.choice(variants)()
+                new_node = np.random.choice(variants)(self.dimension_count)
 
                 if new_node.IsTerminal == 'value':
-                    new_node.value = [np.random.uniform(self.vaule_borders[0],self.vaule_borders[1]), self.dimension_count]
+                    new_node.value = np.random.uniform(self.vaule_borders[0],self.vaule_borders[1])
                 elif new_node.IsTerminal == 'variable':
                     new_node.var_index = np.random.randint(self.dimension_count)
                 
