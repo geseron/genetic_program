@@ -103,8 +103,8 @@ class gp_individ():
         return len(self.nodes)
 
     def mutation(self):
-        nodes_indexes = np.array(range(self.nodes_count))
-        nodes_for_mutation = nodes_indexes[np.random.rand(self.nodes_count) < self.mutation_probability]
+        nodes_indexes = np.array(range(1,self.nodes_count))
+        nodes_for_mutation = nodes_indexes[np.random.rand(self.nodes_count-1) < self.mutation_probability]
         if len(nodes_for_mutation) == 0: 
             return
         for mutant_index in nodes_for_mutation:
