@@ -155,9 +155,9 @@ class gp_individ():
 
 
     def draw_tree(self):
-        graph = graphviz.Digraph()
-        self.head.visualize(graph)
-        graph.render('tree', format='png', view=True)
+        self.graph = graphviz.Digraph()
+        self.head.visualize(self.graph)
+        self.graph.render(f'trees\\tree{str(id(self))[-4:]}', format='png', view=True)
 
 
 
