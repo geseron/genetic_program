@@ -5,7 +5,7 @@ from fitness import *
 def gp_recombination(winners, X_train, y_train, class_labels):
     bad_rookie = True
     attempts = 0
-    while bad_rookie or attempts < 10:
+    while bad_rookie and attempts < 10:
         new_individ = copy.deepcopy(winners[0])
         friend = copy.deepcopy(winners[1])
         nodes_ind = new_individ.nodes
