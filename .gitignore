@@ -155,3 +155,4 @@ ipython_config.py
 /trees
 check*
 test*
+*.csv
