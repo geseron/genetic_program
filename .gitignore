@@ -153,3 +153,5 @@ ipython_config.py
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Python,JupyterNotebooks
 
 /trees
+check*
+test*
