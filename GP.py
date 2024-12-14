@@ -16,6 +16,8 @@ class Genetic_Node():
 class Function(Genetic_Node):
     def calculate(self, x):
         return 0
+    def __del__(self):
+        del self.node_sons
 
 class unary_function(Function):
     IsOperator = "unary_function"
@@ -37,6 +39,7 @@ class unary_function(Function):
         if parent_id:
             graph.edge(parent_id, node_id)
         self.node_sons['left'].visualize(graph, node_id)
+
 
 class binary_function(Function):
     IsOperator = "binary_function"
@@ -157,6 +160,9 @@ class Variable(Terminal):
         if parent_id:
             graph.edge(parent_id, node_id)
     
+    # def __del__(self):
+    #     print(f'Удалена переменная')
+    
 class Value(Terminal):
     value = None  # значение константы
     def __init__(self,dimensions):
@@ -169,5 +175,8 @@ class Value(Terminal):
         graph.node(node_id, f"{self.value:.2f}")
         if parent_id:
             graph.edge(parent_id, node_id)
+    
+    # def __del__(self):
+    #     print(f'Удалена константа')
 
 

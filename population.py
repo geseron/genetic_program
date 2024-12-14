@@ -5,12 +5,14 @@ from selection import *
 from recombination import *
 from learning import *
 from tqdm import tqdm
+import gc
 
 class gp_population():
     selection_type = { 'tournament': tournament_selection,
                         'proportional': proportional_selection
                      }
-    def __init__(self, X_train, y_train, true_class_labels, dimension_count, selection_type='tournament', pop_size = 5, generations_count=20, mutation_probability = 0.3, depth = 4, tournament_size = 5):
+    def __init__(self, X_train, y_train, true_class_labels, dimension_count, selection_type='tournament', pop_size = 100, generations_count=20, mutation_probability = 0.3, depth = 5, tournament_size = 10):
+        np.seterr(over='ignore', divide='ignore', invalid='ignore')
         self.X_train = X_train
         self.y_train = y_train
         self.class_labels = true_class_labels
@@ -39,6 +41,7 @@ class gp_population():
             temp_individ = gp_individ(self.dimensions, self.mutation_probability, depth=self.depth_limit)
             rule = temp_individ.predict(self.X_train)
             if check_adequacy(rule): # true если есть None, inf
+                # del temp_individ
                 continue
             fitness_value = fitness(rule, self.y_train, self.class_labels, temp_individ.depth, self.depth_limit)
             population.append( [temp_individ, fitness_value] )
@@ -48,7 +51,9 @@ class gp_population():
     
     def fit(self):
         for i in tqdm(range(self.generations_count)) :
+        # for i in range(self.generations_count) :
             self.population = generate_new_population(self)
+            gc.collect()
             self.population = np.append( self.population, self.best_individ_of_generation, axis=0 )
             best_fitness = self.population[:,1][np.argmax(self.population[:,1])]
             worts_fintness = self.population[:,1][np.argmin(self.population[:,1])]

@@ -121,7 +121,8 @@ class gp_individ():
                 new_node.node_sons = mutant.node_sons.copy()
                 new_node.node_sons['left'].parent = [new_node,'left']
 
-                self.nodes[mutant_index] = new_node              
+                self.nodes[mutant_index] = new_node  
+                # del variants            
             elif mutant.IsOperator == "binary_function":
                 variants = self.bi_functions.copy()
                 variants.remove( self.function_list[mutant.kind_function] )
@@ -135,6 +136,7 @@ class gp_individ():
                 new_node.node_sons['right'].parent = [new_node,'right']
 
                 self.nodes[mutant_index] = new_node
+                # del variants
             elif not(mutant.IsTerminal == None):
                 variants = self.terminals.copy()
 
@@ -149,6 +151,8 @@ class gp_individ():
                 new_node.parent[0].node_sons[mutant.parent[1]] = new_node
                 
                 self.nodes[mutant_index] = new_node
+                # del variants
+        self.head.define_parent(None)
 
     def predict(self, x):
         return self.head.calculate(x)
@@ -159,6 +163,9 @@ class gp_individ():
         self.head.visualize(self.graph)
         self.graph.render(f'trees\\tree{str(id(self))[-4:]}', format='png', view=True)
 
+    def __del__(self):
+        del self.nodes
+        del self.head
 
 
 
