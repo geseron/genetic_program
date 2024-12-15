@@ -19,6 +19,7 @@ def gp_recombination(winners, X_train, y_train, class_labels):
 
         side = nodes_ind[individ_node].parent[1]
         nodes_ind[individ_node].parent[0].node_sons[side] = nodes_fri[friend_node]
+        new_individ.variable_check()
         rule = new_individ.predict(X_train)
         if check_adequacy(rule): # true если есть None, inf
             # del new_individ

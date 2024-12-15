@@ -64,6 +64,7 @@ class gp_population():
         self.final_rule = self.best_individ_of_generation[0][0].predict(self.X_train)
         self.final_labels = np.zeros(len(self.y_train))
         self.final_labels[self.y_train > self.final_rule] = 1
+        self.history = np.array(self.history)
 
 
         

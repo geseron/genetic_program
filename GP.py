@@ -41,6 +41,7 @@ class unary_function(Function):
         self.node_sons['left'].visualize(graph, node_id)
 
 
+
 class binary_function(Function):
     IsOperator = "binary_function"
     def calculate(self, x):
@@ -72,6 +73,8 @@ class GP_sin(unary_function):
         }
     def calculate(self, x):
         return np.sin(self.node_sons['left'].calculate(x))
+    def get_formula(self):
+        print(f'sin{self.node_sons['left'].get_formula()}')
     
 class GP_abs(unary_function):
     kind_function = "abs"
@@ -82,6 +85,8 @@ class GP_abs(unary_function):
         }
     def calculate(self, x):
         return np.abs(self.node_sons['left'].calculate(x))
+    def get_formula(self):
+        print(f'sin{self.node_sons['left'].get_formula()}')
     
 class GP_exp(unary_function):
     kind_function = "exp"

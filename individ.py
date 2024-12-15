@@ -154,6 +154,26 @@ class gp_individ():
                 # del variants
         self.head.define_parent(None)
 
+    def variable_check(self):
+        terminals = []
+        for i in range(1,self.nodes_count):
+            if self.nodes[i].IsOperator is None:
+                terminals.append( [self.nodes[i], self.nodes[i].IsTerminal, i ] )
+        terminals = np.array(terminals)
+        mask_value = terminals[:,1] == 'value'
+        values = terminals[mask_value]
+        if len( values ) == 0: return
+        elif len( terminals[np.logical_not(mask_value)] ) > 2: return
+        else:
+            node_index_for_replace = np.random.randint(0,len(values))
+            new_node = Variable(self.dimension_count)
+            old_node_index = values[node_index_for_replace][2]
+            new_node.var_index = np.random.randint(0,self.dimension_count)
+            new_node.parent = values[node_index_for_replace][0].parent
+            new_node.parent[0].node_sons[new_node.parent[1]] = new_node
+            self.nodes[old_node_index] = new_node
+        self.head.define_parent(None)
+
     def predict(self, x):
         return self.head.calculate(x)
 
