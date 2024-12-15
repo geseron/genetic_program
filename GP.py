@@ -1,4 +1,5 @@
 import numpy as np
+import sympy
 
 class Genetic_Node():
     IsOperator = None
@@ -74,7 +75,8 @@ class GP_sin(unary_function):
     def calculate(self, x):
         return np.sin(self.node_sons['left'].calculate(x))
     def get_formula(self):
-        print(f'sin{self.node_sons['left'].get_formula()}')
+        #return "sin(" + self.node_sons['left'].get_formula() + ")"
+        return f"sin({self.node_sons['left'].get_formula()})"
     
 class GP_abs(unary_function):
     kind_function = "abs"
@@ -86,7 +88,8 @@ class GP_abs(unary_function):
     def calculate(self, x):
         return np.abs(self.node_sons['left'].calculate(x))
     def get_formula(self):
-        print(f'sin{self.node_sons['left'].get_formula()}')
+        #return "Abs(" + self.node_sons['left'].get_formula() + ")"
+        return f"Abs({self.node_sons['left'].get_formula()})"
     
 class GP_exp(unary_function):
     kind_function = "exp"
@@ -98,6 +101,10 @@ class GP_exp(unary_function):
     def calculate(self, x):
         return np.exp(self.node_sons['left'].calculate(x))
 
+    def get_formula(self):
+
+        return f"exp({self.node_sons['left'].get_formula()})"
+
 class GP_sum(binary_function):
     kind_function = "sum"
     def __init__(self):
@@ -107,6 +114,8 @@ class GP_sum(binary_function):
         }
     def calculate(self, x):
         return self.node_sons['left'].calculate(x) + self.node_sons['right'].calculate(x)
+    def get_formula(self):
+        return f"({self.node_sons['left'].get_formula()} + {self.node_sons['right'].get_formula()})"
 
 class GP_differense(binary_function):
     kind_function = "differense"
@@ -117,6 +126,8 @@ class GP_differense(binary_function):
         }
     def calculate(self, x):
         return self.node_sons['left'].calculate(x) - self.node_sons['right'].calculate(x)
+    def get_formula(self):
+        return f"({self.node_sons['left'].get_formula()} - {self.node_sons['right'].get_formula()})"
     
 class GP_product(binary_function):
     kind_function = "product"
@@ -127,6 +138,9 @@ class GP_product(binary_function):
         }
     def calculate(self, x):
         return self.node_sons['left'].calculate(x) * self.node_sons['right'].calculate(x)
+    
+    def get_formula(self):
+        return f"({self.node_sons['left'].get_formula()} * {self.node_sons['right'].get_formula()})"
 
 class GP_division(binary_function):
     kind_function = "division"
@@ -137,6 +151,8 @@ class GP_division(binary_function):
         }
     def calculate(self, x):
         return self.node_sons['left'].calculate(x) / self.node_sons['right'].calculate(x)
+    def get_formula(self):
+        return f"({self.node_sons['left'].get_formula()} / {self.node_sons['right'].get_formula()})"
 
 class Terminal(Genetic_Node):
     def calculate(self, x):
@@ -164,16 +180,17 @@ class Variable(Terminal):
         graph.node(node_id, f"x_{self.var_index}")
         if parent_id:
             graph.edge(parent_id, node_id)
-    
-    # def __del__(self):
-    #     print(f'Удалена переменная')
+    def get_formula(self):
+        return f"x_{str(self.var_index)}"
     
 class Value(Terminal):
     value = None  # значение константы
     def __init__(self,dimensions):
         self.IsTerminal = 'value'
-        self.dimension_count = dimensions
+        # self.dimension_count = dimensions
+        self.size = 100
     def calculate(self, x):
+        #return self.value * np.ones(self.dimension_count)
         return self.value * np.ones(self.dimension_count)
     def visualize(self, graph, parent_id=None):
         node_id = f'{str(id(self))}'
@@ -181,7 +198,7 @@ class Value(Terminal):
         if parent_id:
             graph.edge(parent_id, node_id)
     
-    # def __del__(self):
-    #     print(f'Удалена константа')
+    def get_formula(self):
+        return f"{self.value:3f}"
 
 

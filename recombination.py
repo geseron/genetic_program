@@ -8,6 +8,7 @@ import sys
 def gp_recombination(winners, X_train, y_train, class_labels):
     bad_rookie = True
     attempts = 0
+    rule = 0
     while bad_rookie and attempts < 10:
         new_individ = copy.deepcopy(winners[0])
         #friend = copy.deepcopy(winners[1])
@@ -25,6 +26,7 @@ def gp_recombination(winners, X_train, y_train, class_labels):
             # del new_individ
             # del nodes_fri
             # del nodes_ind
+            rule = None
             attempts+=1
             continue
         fitness_value = fitness(rule, y_train, class_labels, new_individ.depth, new_individ.depth_limit)
@@ -40,4 +42,7 @@ def gp_recombination(winners, X_train, y_train, class_labels):
         new_individ.nodes = []
         new_individ.head.get_self(new_individ.nodes)
         new_individ.nodes_count = len(new_individ.nodes)
-    return [new_individ,fitness_value]
+    if bad_rookie:
+        return None
+    else:
+        return [new_individ, fitness_value]

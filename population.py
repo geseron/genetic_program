@@ -11,7 +11,7 @@ class gp_population():
     selection_type = { 'tournament': tournament_selection,
                         'proportional': proportional_selection
                      }
-    def __init__(self, X_train, y_train, true_class_labels, dimension_count, selection_type='tournament', pop_size = 100, generations_count=20, mutation_probability = 0.3, depth = 5, tournament_size = 10):
+    def __init__(self, X_train, y_train, true_class_labels, dimension_count, selection_type='tournament', pop_size = 100, generations_count=20, mutation_probability = 0.3, depth = 5, tournament_size = 5):
         np.seterr(over='ignore', divide='ignore', invalid='ignore')
         self.X_train = X_train
         self.y_train = y_train
@@ -60,7 +60,7 @@ class gp_population():
             self.history.append([best_fitness, worts_fintness])
             self.best_individ_of_generation = np.reshape(self.population[ np.argmax(self.population[:,1]) ], (1,2))
         
-        print(f"Значение фитнесса: {self.best_individ_of_generation[0][1]}")
+        #print(f"Значение фитнесса: {self.best_individ_of_generation[0][1]}")
         self.final_rule = self.best_individ_of_generation[0][0].predict(self.X_train)
         self.final_labels = np.zeros(len(self.y_train))
         self.final_labels[self.y_train > self.final_rule] = 1

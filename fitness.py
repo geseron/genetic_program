@@ -9,6 +9,7 @@ def fitness(rule, y_train, true_class, depth, depth_limit):
     penalty = 0
     if depth>depth_limit:
         penalty = 0.05 * ( depth - depth_limit )
+        # penalty = 0.1 * depth
     fit = f1_score(true_class, predicted_class) - penalty
     if fit < 0 : fit = 0.1
     #print(f"{fit=}  {penalty}")

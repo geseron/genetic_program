@@ -178,10 +178,13 @@ class gp_individ():
         return self.head.calculate(x)
 
 
-    def draw_tree(self):
+    def draw_tree(self, iteration=0, selection = None):
         self.graph = graphviz.Digraph()
         self.head.visualize(self.graph)
-        self.graph.render(f'trees\\tree{str(id(self))[-4:]}', format='png', view=True)
+        if not(selection is None):
+            self.graph.render(f'exp\\trees\\{selection}{iteration}', format='png', view=False)
+        else:
+            self.graph.render(f'trees\\tree{str(id(self))[-4:]}', format='png', view=True)
 
     def __del__(self):
         del self.nodes

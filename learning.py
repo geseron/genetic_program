@@ -7,8 +7,17 @@ def generate_new_population(main_obj):
     # main_obj - ссылка на объект gp_population
     new_population = []
     while len(new_population) < main_obj.pop_size:
-        winners = main_obj.selection(main_obj)
-        rookie = gp_recombination(winners, main_obj.X_train, main_obj.y_train, main_obj.class_labels)
+        attempts = 0
+        bad_winners = True
+        while bad_winners and attempts < 10:    
+            winners = main_obj.selection(main_obj)
+            rookie = gp_recombination(winners, main_obj.X_train, main_obj.y_train, main_obj.class_labels)
+            if rookie is None:
+                attempts += 1
+                continue
+            else:
+                bad_winners = False
+        if bad_winners: continue
         attempts = 0
         bad_mutation = True
         while bad_mutation and attempts < 10:
