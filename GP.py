@@ -167,9 +167,10 @@ class Terminal(Genetic_Node):
     
 class Variable(Terminal):
     var_index = None # индекс переменной
-    def __init__(self,dimensions):
+    def __init__(self,dimensions, data_size):
         self.IsTerminal = 'variable'
         self.dimension_count = dimensions
+        self.data_size = data_size
     def calculate(self, x):
         if self.dimension_count != 1:
             return x[:,self.var_index]
@@ -185,13 +186,12 @@ class Variable(Terminal):
     
 class Value(Terminal):
     value = None  # значение константы
-    def __init__(self,dimensions):
+    def __init__(self, dimensions, data_size):
         self.IsTerminal = 'value'
-        # self.dimension_count = dimensions
-        self.size = 100
+        self.dimension_count = dimensions
+        self.size = data_size
     def calculate(self, x):
-        #return self.value * np.ones(self.dimension_count)
-        return self.value * np.ones(self.dimension_count)
+        return self.value * np.ones(self.size)
     def visualize(self, graph, parent_id=None):
         node_id = f'{str(id(self))}'
         graph.node(node_id, f"{self.value:.2f}")
