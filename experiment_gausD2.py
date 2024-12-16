@@ -29,7 +29,7 @@ for selection in selections:
     }
     for iteration in range(40):
         print(f"{iteration=}")
-        model = gp_population(X_train, y_train, true_class, 1, generations_count=20, mutation_probability=0.5, selection_type=selection, depth=5)
+        model = gp_population(X_train, y_train, true_class, 1, generations_count=50, mutation_probability=0.4, selection_type=selection,depth=4, tournament_size=10)
         model.fit()
         model.best_individ_of_generation[0][0].draw_tree(iteration, selection)
 

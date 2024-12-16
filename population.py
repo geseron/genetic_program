@@ -62,13 +62,14 @@ class gp_population():
             worts_fintness = self.population[:,1][np.argmin(self.population[:,1])]
             self.history.append([best_fitness, worts_fintness])
 
-            temp_best = copy.deepcopy(self.population[ np.argmax(self.population[:,1]) ][0])
-            temp_best_rule = temp_best.predict(self.X_train)
-            if check_adequacy(temp_best_rule):
-                continue
-            else:
-                fitness_value = fitness(temp_best_rule, self.y_train, self.class_labels, temp_best.depth, self.depth_limit)
-                self.best_individ_of_generation = np.reshape([temp_best, fitness_value], (1,2))
+            self.best_individ_of_generation = np.reshape(self.population[np.argmax(self.population[:,1])], (1,2))
+            # temp_best = copy.deepcopy(self.population[ np.argmax(self.population[:,1]) ][0])
+            # temp_best_rule = temp_best.predict(self.X_train)
+            # if check_adequacy(temp_best_rule):
+            #     continue
+            # else:
+            #     fitness_value = fitness(temp_best_rule, self.y_train, self.class_labels, temp_best.depth, self.depth_limit)
+            #     self.best_individ_of_generation = np.reshape([temp_best, fitness_value], (1,2))
         
         print(f"Значение фитнесса: {self.best_individ_of_generation[0][1]}")
         self.final_rule = self.best_individ_of_generation[0][0].predict(self.X_train)
