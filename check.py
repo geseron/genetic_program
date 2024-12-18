@@ -9,7 +9,7 @@ from sklearn.metrics import accuracy_score
 
 
 data = pd.read_csv('TwoGaussD2.csv')
-data = data.sort_values(by='X', ascending=True)
+#data = data.sort_values(by='X', ascending=True)
 true_class = np.array(data['Class'])
 y_train = np.array( data['Y'] )
 X_train = np.array( data['X'] )
@@ -18,7 +18,7 @@ X_train = np.array( data['X'] )
 
 
 
-model = gp_population(X_train, y_train, true_class, 1, generations_count=50, mutation_probability=0.4, selection_type='tournament',depth=4, tournament_size=10)
+model = gp_population(X_train, y_train, true_class, 1, generations_count=20, mutation_probability=0.4, selection_type='tournament',depth=4, tournament_size=10)
 model.fit()
 model.best_individ_of_generation[0][0].draw_tree()
 
