@@ -12,7 +12,7 @@ class gp_individ():
         self.function_list = {
             'sin':GP_sin,
             'abs':GP_abs,
-            #'exp':GP_exp,
+            'exp':GP_exp,
             'sum':GP_sum,
             'differense':GP_differense,
             'product':GP_product,
@@ -191,6 +191,12 @@ class gp_individ():
     def __del__(self):
         del self.nodes
         del self.head
+
+
+
+    x = np.array([  [5, 10],
+                    [7, 3]
+                ])
 
 
 
