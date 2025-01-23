@@ -152,7 +152,9 @@ ipython_config.py
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#Python,JupyterNotebooks
 
-/trees
+programm/trees
 test*
 *.csv
-\exp
+check*
+*.xls
+programm/exp
